@@ -27,10 +27,11 @@ function TodoList({ className }) {
               key={item.id}
               name={item.name}
               tags={item.tags}
+              removing={item.removing}
               isComplete={item.isComplete}
               onComplete={() => store.setCompleted(item.id)}
               onChange={(e) => store.setItemName(item.id, e.target.value)}
-              onRemove={() => store.removeItem(item.id)}
+              onRemove={() => store.removeItemWithAnimation(item.id)}
               inProgress={() => store.setInProgress(item.id)}
               onAddTag={(tagName) => store.addTag(item.id, tagName)}
               onRemoveTag={(tagId) => store.removeTag(item.id, tagId)}
@@ -48,8 +49,9 @@ function TodoList({ className }) {
               key={item.id}
               name={item.name}
               tags={item.tags}
+              removing={item.removing}
               onComplete={() => store.setCompleted(item.id)}
-              onRemove={() => store.removeItem(item.id)}
+              onRemove={() => store.removeItemWithAnimation(item.id)}
               notInProgress={() => store.setNotInProgress(item.id)}
             />
           ))}
@@ -64,7 +66,8 @@ function TodoList({ className }) {
               key={item.id}
               name={item.name}
               tags={item.tags}
-              onRemove={() => store.removeItem(item.id)}
+              removing={item.removing}
+              onRemove={() => store.removeItemWithAnimation(item.id)}
             />
           ))}
         </ul>
@@ -74,7 +77,7 @@ function TodoList({ className }) {
         <FilterButtons
           uniqueTags={store.allUniqueTags}
           selectedTag={store.selectedFilterTag}
-          onToggleFilter={(tagName) => store.toggleTagFilter(tagName)}
+          onToggleFilter={(tagName) => store.removeItemWithAnimation(tagName)}
         />
       </footer>
     </div>
@@ -90,6 +93,7 @@ function createTodoStore() {
         isComplete: false,
         inProgress: false,
         tags: [],
+        removing: false, // For strikethrough animation
       },
     ],
     // Store-level property to track selected filter
@@ -198,6 +202,18 @@ function createTodoStore() {
       } else {
         // Otherwise, set it as the filter
         self.selectedFilterTag = tagName;
+      }
+    },
+    removeItemWithAnimation(id) {
+      const item = self.items.find((i) => i.id === id);
+      if (item) {
+        // Set the removing flag to true, which will trigger the animation
+        item.removing = true;
+
+        // After animation completes, actually remove the item
+        setTimeout(() => {
+          self.items = self.items.filter((i) => i.id !== id);
+        }, 800); // Animation duration + a little extra
       }
     },
   });
