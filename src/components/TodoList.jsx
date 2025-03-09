@@ -207,13 +207,19 @@ function createTodoStore() {
 
 export default styled(observer(TodoList))`
   max-width: 750px;
-  height: 80vh;
+
   margin: 0 auto;
   margin-top: 50px; // Create some separatation between start of page and TodoList element
   padding: 2rem;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  // Added to prevent overflow of list items if they exceed the height of TodoList component
+  min-height: 500px; /* Minimum height when there are few items */
+  height: auto; /* Allow content to determine the height */
+  max-height: 90vh; /* Maximum height is 90% of viewport height */
+  overflow-y: auto; /* Add scrollbar when content exceeds max-height */
 
   .title {
     font-family: "Poppins", sans-serif;
