@@ -33,9 +33,16 @@ export default styled(observer(CompletedItem))`
   margin: 5px 0;
   border-radius: 5px;
   font-size: 16px;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
   border-bottom: 1px solid #e0e0e0;
-  transform: scale(1.05); /* Makes the button hover when mouse is over it*/
+
+  /* Hovering effects for list items*/
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
   .completed-content {
     display: flex;

@@ -48,7 +48,7 @@ function TodoListItem({
               onRemove={() => onRemoveTag(tag.id)}
             />
           ))}
-          {/*Conditional rendering depending on whether the suer is typing or
+          {/*Conditional rendering depending on whether the user is typing or
           not */}
           {isAddingTag ? (
             <div className="new-tag-input-container">
@@ -59,7 +59,7 @@ function TodoListItem({
                 onChange={(e) => setNewTagName(e.target.value)}
                 onBlur={handleAddTag}
                 onKeyDown={handleKeyDown}
-                placeholder="Tag name..."
+                placeholder="Enter Tag name..."
                 autoFocus
               />
             </div>
@@ -74,8 +74,12 @@ function TodoListItem({
         </div>
       </div>
       <div className="button-container">
-        <button onClick={onComplete}>Done</button>
-        <button onClick={inProgress}>In Progress</button>
+        <button onClick={onComplete} className="done-button">
+          Done
+        </button>
+        <button onClick={inProgress} className="inprog-button">
+          In Progress
+        </button>
         <button onClick={onRemove} className="remove-btn">
           ×
         </button>
@@ -88,13 +92,25 @@ export default styled(observer(TodoListItem))`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 16px;
   border-bottom: 1px solid #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+
+  /* Hovering effects for list items*/
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
   .todo-content {
     display: flex;
     flex-direction: column;
     flex: 1;
+    padding-right: 12px;
   }
 
   .todo-input {
@@ -119,8 +135,21 @@ export default styled(observer(TodoListItem))`
 
   button {
     margin-left: 8px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
-
+  button:hover {
+    background-color: #3367d6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
   .add-tag-btn {
     background: none;
     border: 1px dashed #999;
@@ -130,22 +159,33 @@ export default styled(observer(TodoListItem))`
     border-radius: 4px;
     cursor: pointer;
   }
+  .done-button {
+    background-color: #34a853;
+  }
+  .done-button:hover {
+    background-color: #2d9147;
+  }
+  .inprog-button {
+    background-color: #fbbc05;
+    color: #333;
+  }
+  .inprog-button:hover {
+    background-color: #f0ad0e;
+    color: #333;
+  }
 
   .add-tag-btn:hover {
     background-color: #f0f0f0;
   }
 
   .remove-btn {
-    cursor: pointer;
-    color: #666;
-    font-weight: bold;
-    background: none;
-    border: none;
-    font-size: 18px;
+    background-color: red;
   }
 
   .remove-btn:hover {
+    background-color: white;
     color: red;
+    border: solid 1px red;
   }
   .new-tag-input-container {
     display: inline-block;

@@ -36,7 +36,7 @@ function inProgressItem({
 export default styled(observer(inProgressItem))`
   display: flex;
   align-items: center;
-  background: #d4edda;
+  background: #fff8e1;
   color: #333;
   padding: 10px;
   margin: 5px 0;
@@ -44,7 +44,14 @@ export default styled(observer(inProgressItem))`
   font-size: 16px;
   transition: transform 0.2s ease-in-out;
   border-bottom: 1px solid #e0e0e0;
-  transform: scale(1.05); /* Makes the button hover when mouse is over it*/
+
+  /* Hovering effects for list items*/
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
   .inProgress-content {
     display: flex;
@@ -65,19 +72,21 @@ export default styled(observer(inProgressItem))`
 
   button {
     margin-left: 8px;
+    background-color: #ff9800;
   }
 
   .remove-btn {
     margin-left: 8px;
     cursor: pointer;
-    color: #666;
+    color: black;
     font-weight: bold;
     background: none;
-    border: none;
+    border: 1px solid black;
     font-size: 18px;
   }
 
   .remove-btn:hover {
-    color: red;
+    background-color: #f57c00;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 `;

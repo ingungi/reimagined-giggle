@@ -94,6 +94,8 @@ function createTodoStore() {
     ],
     // Store-level property to track selected filter
     selectedFilterTag: null,
+
+    // GETTER FUNCTIONS
     // Make sure not in progress as well
     get activeItems() {
       let filtered = self.items.filter((i) => !i.isComplete && !i.inProgress);
@@ -137,6 +139,7 @@ function createTodoStore() {
       const filters = [...new Set(allTags.map((tag) => tag.name))];
       return filters;
     },
+    // ADD FUNCTIONS
     addItem() {
       self.items.push({
         id: uuid(),
@@ -160,6 +163,7 @@ function createTodoStore() {
         name: tagName,
       });
     },
+    // SETTER FUNCTIONS
     setTagName(itemId, tagId, name) {
       const item = self.items.find((i) => i.id === itemId); // Grabs item with id param
       const itemTags = item.tags; // Array of item Tags
@@ -178,6 +182,7 @@ function createTodoStore() {
       const item = self.items.find((i) => i.id === id);
       item.inProgress = false;
     },
+    // REMOVE FUNCTIONS
     removeItem(id) {
       self.items = self.items.filter((i) => i.id !== id);
     },
@@ -185,6 +190,7 @@ function createTodoStore() {
       const item = self.items.find((i) => i.id === itemId); // Grabs item with id param
       item.tags = item.tags.filter((i) => i.id !== tagId);
     },
+    // OTHER
     toggleTagFilter(tagName) {
       // If this tag is already selected, clear the filter
       if (self.selectedFilterTag === tagName) {
@@ -201,7 +207,9 @@ function createTodoStore() {
 
 export default styled(observer(TodoList))`
   max-width: 750px;
+  height: 80vh;
   margin: 0 auto;
+  margin-top: 50px; // Create some separatation between start of page and TodoList element
   padding: 2rem;
   background-color: white;
   border-radius: 8px;
@@ -225,5 +233,29 @@ export default styled(observer(TodoList))`
     border-radius: 4px;
     padding: 8px 16px;
     cursor: pointer;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  button:hover {
+    background-color: #3367d6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  li {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 `;
